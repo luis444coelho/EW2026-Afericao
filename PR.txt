@@ -1,0 +1,61 @@
+1) Persistência de dados
+- Base de dados: MongoDB
+- DB: autoRepair
+- Coleção: repairs
+- A persistência é garantida no Docker via volume nomeado (mongo_data), definido no docker-compose.yml.
+
+2) Preparação e importação do dataset
+  - Importação: dataset_reparacoes.json (JSON array pronto para mongoimport --jsonArray)
+  -Alterações : foi eliminada uma linha no início e no fim do dataset
+
+3) Setup da BD e import automático (Docker)
+- O MongoDB é iniciado como serviço no docker-compose.
+- A importação é feita automaticamente na primeira inicialização do container (quando o volume está vazio)
+  usando scripts colocados em docker-entrypoint-initdb.d.
+  - Dockerfile do Mongo: ex1/Dockerfile.mongo
+  - Script de import: ex1/mongo-init/import.sh
+  - Ficheiro importado: ex1/dataset_reparacoes_fixed.json
+
+
+4) API de dados
+- Serviço: API (Node + Express + Mongoose)
+- Ficheiro: ex1/repairs_api.js
+- Porta: 16025
+- Liga à BD via variável de ambiente MONGO_URL (no compose aponta para mongodb://mongodb:27017/autoRepair)
+- Rotas implementadas:
+  - GET  /repairs
+      suporta querystring: ?ano=YYYY e/ou ?marca=Marca
+  - GET  /repairs/:id
+  - GET  /repairs/matrículas 
+  - GET  /repairs/interv
+  - POST /repairs
+  - DELETE /repairs/:id
+
+5) Interface (aplicação Web)
+- Serviço: Interface (Node + Express + Pug)
+- Pasta: ex2/
+- Porta: 16026
+- Consome SEMPRE a API. Não acede diretamente ao Mongo.
+- Rotas pedidas:
+  - GET  /            (página principal com tabela de registos)
+  - GET  /:id         (página dos registos)
+  - GET  /:marca      (página da marca; lista modelos + tabela de registos da marca)
+- Estilos:
+  - CSS servido de ex2/public/stylesheets/style.css (W3.CSS), aplicado via classes w3-* nos templates Pug.
+
+6) Respostas textuais / warm-up queries
+- Ficheiro com as queries MongoDB: ex1/queries.txt
+
+7) Como executar
+
+Pré-requisitos:
+- Docker + Docker Compose
+
+Passos:
+1) A partir da raiz do projeto (onde está docker-compose.yml):
+   - docker compose up -d --build
+
+2) Verificar serviços:
+   - API:      http://localhost:16025/repairs
+   - Interface: http://localhost:16026/
+
