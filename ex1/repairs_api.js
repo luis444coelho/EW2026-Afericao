@@ -40,15 +40,6 @@ app.get('/repairs', async (req, res) => {
     }
 });
 
-app.get('/repairs/matrículas', async (req, res) => {
-    try {
-        const mats = await Repair.distinct('viatura.matricula');
-        mats.sort((a, b) => String(a).localeCompare(String(b), 'pt'));
-        res.json(mats);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 app.get('/repairs/matr%C3%ADculas', async (req, res) => {
     try {
@@ -60,15 +51,6 @@ app.get('/repairs/matr%C3%ADculas', async (req, res) => {
     }
 });
 
-app.get('/repairs/matriculas', async (req, res) => {
-    try {
-        const mats = await Repair.distinct('viatura.matricula');
-        mats.sort((a, b) => String(a).localeCompare(String(b), 'pt'));
-        res.json(mats);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 app.get('/repairs/interv', async (req, res) => {
     try {
