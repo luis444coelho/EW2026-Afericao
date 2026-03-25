@@ -1,0 +1,4 @@
+FROM mongo:latest
+
+COPY dataset_reparacoes_fixed.json /docker-entrypoint-initdb.d/
+COPY mongo-init/import.sh /docker-entrypoint-initdb.d/

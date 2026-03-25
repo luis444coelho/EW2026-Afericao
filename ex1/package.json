@@ -1,0 +1,13 @@
+{
+  "name": "autorepair-api",
+  "version": "1.0.0",
+  "description": "API de dados - Reparações (autoRepair.repairs)",
+  "main": "repairs_api.js",
+  "scripts": {
+    "start": "node repairs_api.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.2.4"
+  }
+}

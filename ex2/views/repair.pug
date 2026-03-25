@@ -1,0 +1,52 @@
+extends layout
+
+block content
+  p
+    a.w3-button.w3-teal.w3-margin-bottom(href='/') ← Voltar à página principal
+
+  h2.w3-xlarge Registo
+
+  table.w3-table-all
+    tr
+      th _id
+      td= repair._id
+    tr
+      th data
+      td= repair.data
+    tr
+      th nome
+      td= repair.nome
+    tr
+      th nif
+      td= repair.nif
+    tr
+      th matrícula
+      td= repair.viatura && repair.viatura.matricula
+    tr
+      th marca
+      td
+        if repair.viatura && repair.viatura.marca
+          a(href='/' + encodeURIComponent(repair.viatura.marca))= repair.viatura.marca
+    tr
+      th modelo
+      td= repair.viatura && repair.viatura.modelo
+    tr
+      th nr_intervencoes
+      td= repair.nr_intervencoes
+
+  h3.w3-large Intervenções
+  if repair.intervencoes && repair.intervencoes.length
+    table.w3-table-all.w3-striped
+      thead
+        tr.w3-teal
+          th código
+          th nome
+          th descrição
+      tbody
+        each i in repair.intervencoes
+          tr
+            td= i.codigo
+            td= i.nome
+            td= i.descricao
+  else
+    p (sem intervenções)

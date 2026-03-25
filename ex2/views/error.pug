@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h2.w3-xlarge Erro
+  p.w3-text-red= message
+  if error && error.message
+    pre.w3-panel.w3-pale-red.w3-leftbar.w3-border-red= error.message

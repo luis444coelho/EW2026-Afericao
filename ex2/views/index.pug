@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h2.w3-xlarge Lista de Reparações
+  table.w3-table-all.w3-hoverable.w3-striped
+    thead
+      tr.w3-teal
+        th _id
+        th data
+        th nome
+        th matrícula
+        th marca
+        th nr_intervencoes
+    tbody
+      each r in repairs
+        tr
+          td
+            a(href='/' + encodeURIComponent(r._id))= r._id
+          td= r.data
+          td= r.nome
+          td= r.viatura && r.viatura.matricula
+          td
+            if r.viatura && r.viatura.marca
+              a(href='/' + encodeURIComponent(r.viatura.marca))= r.viatura.marca
+          td= r.nr_intervencoes

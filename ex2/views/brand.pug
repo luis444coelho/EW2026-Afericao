@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  p
+    a.w3-button.w3-teal.w3-margin-bottom(href='/') ← Voltar à página principal
+  h2.w3-xlarge Marca: #{marca}
+
+  h3.w3-large Modelos intervencionados
+  ul.w3-ul.w3-border
+    each m in modelos
+      li= m
+
+  h3.w3-large Registos
+  table.w3-table-all.w3-hoverable.w3-striped
+    thead
+      tr.w3-teal
+        th _id
+        th data
+        th nome
+        th matrícula
+        th marca
+        th nr_intervencoes
+    tbody
+      each r in repairs
+        tr
+          td
+            a(href='/' + encodeURIComponent(r._id))= r._id
+          td= r.data
+          td= r.nome
+          td= r.viatura && r.viatura.matricula
+          td= r.viatura && r.viatura.marca
+          td= r.nr_intervencoes
